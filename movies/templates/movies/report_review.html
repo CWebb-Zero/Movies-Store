@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="p-3">
+    <div class="container">
+        <div class="card-body">
+            <h2>Report Review</h2>
+            <hr>
+            <p>Movie: {{template_data.review.movie.name}}</p>
+            <p>Review by: {{template_data.review.user}}</p>
+            <div class="details">
+                <p>Review Comment: "{{template_data.review.comment}}"</p>
+            </div>
+            <form method="POST"
+                  action="{% url 'movies.report_review' movie_id=template_data.movie_id review_id=template_data.review.id%}">
+                {% csrf_token %}
+                <label for="reason">Reason:</label>
+                <textarea name="reason" required
+                          class="form-control"
+                          id="reason"></textarea>
+                <button type="submit" class="btn btn-danger text-white">Submit Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

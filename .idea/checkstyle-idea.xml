@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CheckStyle-IDEA" serialisationVersion="2">
+    <checkstyleVersion>13.0.0</checkstyleVersion>
+    <scanScope>JavaOnly</scanScope>
+    <suppressErrors>true</suppressErrors>
+    <copyLibs>true</copyLibs>
+    <option name="thirdPartyClasspath" />
+    <option name="activeLocationIds">
+      <option value="4a091f66-4c0c-41f5-b0fe-26c486f91105" />
+    </option>
+    <option name="locations">
+      <list>
+        <ConfigurationLocation id="bundled-sun-checks" type="BUNDLED" scope="All" description="Sun Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="bundled-google-checks" type="BUNDLED" scope="All" description="Google Checks">(bundled)</ConfigurationLocation>
+        <ConfigurationLocation id="4a091f66-4c0c-41f5-b0fe-26c486f91105" type="LOCAL_FILE" scope="All" description="CS 1332 CheckStyle">$USER_HOME$/Desktop Files/College/Spring 2026/CS 1332/checkstyle.xml</ConfigurationLocation>
+      </list>
+    </option>
+  </component>
+</project>
