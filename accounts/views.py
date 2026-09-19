@@ -39,8 +39,8 @@ def signup(request):
         form = CustomUserCreationForm(request.POST, error_class=CustomErrorList)
         if form.is_valid():
             form.save()
-            user = authenticate(request, password=form.fields['password1'].__str__(), username=form.fields['username'].__str__())
-            auth_login(request, user)
+            new_user = authenticate(request, password=request.POST['password2'], username=request.POST['username'])
+            auth_login(request, new_user)
             return redirect('home.index')
             # edited lines above such that the user is automatically logged in once registering
         else:
