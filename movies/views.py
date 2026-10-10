@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Movie, Review
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.models import User
+from django.db.models import Sum
+
 
 def index(request):
     search_term = request.GET.get('search')
@@ -75,3 +79,20 @@ def report_review(request, movie_id, review_id):
     if request.method == 'POST':
         review.delete()
     return redirect('movies.show', movie_id)
+
+@staff_member_required
+def get_top_user(request):
+    rankedUsers = (
+        User.objects
+        .filter(order__isnull=False)
+        .annotate(movies_purchased=Sum('order__item__quantity'))
+        .order_by('-movies_purchased', 'username')
+    )
+
+    topUser = rankedUsers.first()
+
+    template_data = {}
+    template_data['title'] = 'Top User'
+    template_data['top'] = topUser
+
+    return render(request, 'movies/top_user.html', {'template_data': template_data})
