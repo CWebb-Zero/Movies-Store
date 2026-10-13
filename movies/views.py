@@ -96,3 +96,23 @@ def get_top_user(request):
     template_data['top'] = topUser
 
     return render(request, 'movies/top_user.html', {'template_data': template_data})
+
+@staff_member_required
+def get_top_users(request):
+    ranked_users = (
+        User.objects
+        .filter(order__isnull=False)
+        .annotate(movies_purchased=Sum('order__item__quantity'))
+        .order_by('-movies_purchased', 'username')
+    )
+    list_size = request.GET.get('list_size', '').strip()
+    if list_size.isdigit() and int(list_size) > 0:
+        ranked_users = ranked_users[:int(list_size)]
+    
+    template_data = {}
+    template_data['title'] = 'Top Users'
+    template_data['users'] = ranked_users
+    template_data['list_size'] = list_size
+
+    return render(request, 'movies/top_users.html', {'template_data': template_data})
+    
