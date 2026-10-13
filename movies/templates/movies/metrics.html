@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 style="text-align: center; padding-top:20px;"><b><u>Metrics</u></b></h2>
+
+<div style="padding-top:10rem;"></div>
+
+<div class="row row-cols-1 row-cols-md-2 g-4" style="justify-content: center;">
+    <div class="col col-md-4 col-lg-3 mb-2 card align-items-center pt-4">
+        <h3>Most Purchased Movie</h3>
+        <h4 style="font-weight: bold;">{{ template_data.most_purchased.name }}</h4>
+        <p>Purchased <b>{{ template_data.most_purchased.purchase_count }}</b> time(s)</p>
+    </div>
+    <div class="col col-md-4 col-lg-3 mb-2">
+    </div>
+    <div class="col col-md-4 col-lg-3 mb-2 card align-items-center pt-4">
+        <h3>Most Reviewed Movie</h3>
+        <h4 style="font-weight: bold;">{{ template_data.most_reviewed.name }}</h4>
+        <p>Reviewed <b>{{ template_data.most_reviewed.review_count }}</b> time(s)</p>
+    </div>
+</div>
+<div style="padding-top:10rem;"></div>
+
+{% endblock content %}

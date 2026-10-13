@@ -39,3 +39,13 @@
     width: fit-content;
     max-height: 400px;
 }
+
+.metrics-container {
+    display: inline;
+
+}
+
+.metrics-card {
+    border-color: black;
+    border-radius: 4px;
+}
