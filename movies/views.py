@@ -33,11 +33,13 @@ def show(request, id):
 def create_review(request, id):
     if request.method == 'POST' and request.POST['comment']!= '':
         movie = Movie.objects.get(id=id)
+        movie.review_count = movie.review_count + 1
         review = Review()
         review.comment = request.POST['comment']
         review.movie = movie
         review.user = request.user
         review.save()
+        movie.save()
         return redirect('movies.show', id=id)
     else:
         return redirect('movies.show', id=id)
@@ -64,7 +66,10 @@ def edit_review(request, id, review_id):
 @login_required
 def delete_review(request, id, review_id):
     review = get_object_or_404(Review, id=review_id, user=request.user)
+    movie = review.movie
+    movie.review_count -= 1
     review.delete()
+    movie.save()
     return redirect('movies.show', id=id)
 
 @login_required
@@ -115,4 +120,26 @@ def get_top_users(request):
     template_data['list_size'] = list_size
 
     return render(request, 'movies/top_users.html', {'template_data': template_data})
-    
+
+@staff_member_required
+def get_metrics(request):
+    template_data = {}
+    movies = Movie.objects.all()
+    most_purchased = movies[0]
+    most_reviewed = movies[0]
+    purchased_max = most_purchased.purchase_count
+    reviewed_max = most_reviewed.review_count
+    for movie in movies:
+        if (movie.purchase_count > purchased_max):
+            most_purchased = movie
+            purchased_max = most_purchased.purchase_count
+        if (movie.review_count > reviewed_max):
+            most_reviewed = movie
+            reviewed_max = most_reviewed.review_count
+
+    template_data['most_purchased'] = most_purchased
+    template_data['most_reviewed'] = most_reviewed
+
+    return render(request, 'movies/metrics.html', {'template_data': template_data})
+
+            
