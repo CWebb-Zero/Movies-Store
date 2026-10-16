@@ -27,7 +27,60 @@
                         </div>
                     </form>
                 </p>
-                <h2>Reviews</h2>
+                <h2 class="mt-3">Rating</h2>
+                <hr />
+                <p><b>Average Rating:</b> {{ template_data.rating }}</p>
+                {% if user.is_authenticated %}
+                    <form method="POST" action="{% url 'movies.rating' id=template_data.movie.id %}">
+                        {% csrf_token %}
+                        {% if template_data.hasRating %}
+                            <!-- 1 star -->
+                            {% if template_data.rating >= 1 %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="oneStar.value=1">
+                            {% else %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="oneStar.value=1">
+                            {% endif %}
+                            <!-- 2 star -->
+                            {% if template_data.rating >= 2 %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="twoStar.value=1">
+                            {% else %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="twoStar.value=1">
+                            {% endif %}
+                            <!-- 3 star -->
+                            {% if template_data.rating >= 3 %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="threeStar.value=1">
+                            {% else %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="threeStar.value=1">
+                            {% endif %}
+                            <!-- 4 star -->
+                            {% if template_data.rating >= 4 %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="fourStar.value=1">
+                            {% else %}
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="fourStar.value=1">
+                            {% endif %}
+                            <!-- 5 star -->
+                            {% if template_data.rating == 5 %}
+                                <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="fiveStar.value=1">
+                            {% else %}
+                                <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="fiveStar.value=1">
+                            {% endif %}
+                        {% else %}
+                        <div class="row d-flex">
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="oneStar.value=1">
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="twoStar.value=1">
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="threeStar.value=1">
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="fourStar.value=1">
+                            <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="fiveStar.value=1">
+                        </div>
+                        {% endif %}
+                        <input type="hidden" value="0" name="oneStar" id="oneStar">
+                        <input type="hidden" value="0" name="twoStar" id="twoStar">
+                        <input type="hidden" value="0" name="threeStar" id="threeStar">
+                        <input type="hidden" value="0" name="fourStar" id="fourStar">
+                        <input type="hidden" value="0" name="fiveStar" id="fiveStar">
+                    </form>
+                {% endif %}
+                <h2 class="mt-3">Reviews</h2>
                 <hr />
                 <ul class="list-group">
                     {% for review in template_data.reviews %}
@@ -89,4 +142,7 @@
         </div>
     </div>
 </div>
+<script>
+
+</script>
 {% endblock content %}
