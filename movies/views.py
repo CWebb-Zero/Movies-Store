@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Movie, Review
+from .models import Movie, Review, Rating
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
@@ -26,6 +26,26 @@ def show(request, id):
     template_data['title'] = movie.name
     template_data['movie'] = movie
     template_data['reviews'] = reviews
+
+    ratings = Rating.objects.filter(movie=movie)
+    avgRating = 0.0
+    if not ratings.first():
+        avgRating = 3.0
+    else:
+        for rating in ratings:
+            avgRating += rating.rating
+        avgRating = avgRating / len(ratings)
+    template_data['rating'] = avgRating
+
+    if request.user.is_authenticated:
+        userRating = Rating.objects.filter(movie=movie, user=request.user).first()
+        if userRating:
+            template_data['hasRating'] = True
+            template_data['userRating'] = userRating.rating
+        else:
+            template_data['hasRating'] = False
+    else:
+        template_data['hasRating'] = False
     return render(request, 'movies/show.html',
                   {'template_data': template_data})
 
@@ -142,4 +162,30 @@ def get_metrics(request):
 
     return render(request, 'movies/metrics.html', {'template_data': template_data})
 
-            
+@login_required
+def submit_rating(request, id):
+    print("=1 " + str(1==request.POST['oneStar']))
+    print("=2 " + str(1==request.POST['twoStar']))
+    print("=3 " + str(1==request.POST['threeStar']))
+    print("=4 " + str(1==request.POST['fourStar']))
+    print("=5 " + str(1==request.POST['fiveStar']))
+
+    if int(request.POST['fiveStar']) == 1:
+        score = 5
+    elif int(request.POST['fourStar']) == 1:
+        score = 4
+    elif int(request.POST['threeStar']) == 1:
+        score = 3
+    elif int(request.POST['twoStar']) == 1:
+        score = 2
+    else:
+        score = 1
+
+    userRating = Rating.objects.filter(movie=Movie.objects.get(id=id), user=request.user).first()
+    if userRating:
+        print(score)
+        userRating.rating = score
+    else:
+        userRating = Rating(user=request.user, movie=Movie.objects.get(id=id), rating=score)
+    userRating.save()
+    return redirect('movies.show', id)

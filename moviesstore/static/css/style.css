@@ -49,3 +49,8 @@
     border-color: black;
     border-radius: 4px;
 }
+
+.review-star {
+    height: 40px;
+    width: 40px;
+}
