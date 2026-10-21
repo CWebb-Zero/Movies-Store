@@ -35,31 +35,31 @@
                         {% csrf_token %}
                         {% if template_data.hasRating %}
                             <!-- 1 star -->
-                            {% if template_data.rating >= 1 %}
+                            {% if template_data.userRating >= 1 %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="oneStar.value=1">
                             {% else %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="oneStar.value=1">
                             {% endif %}
                             <!-- 2 star -->
-                            {% if template_data.rating >= 2 %}
+                            {% if template_data.userRating >= 2 %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="twoStar.value=1">
                             {% else %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="twoStar.value=1">
                             {% endif %}
                             <!-- 3 star -->
-                            {% if template_data.rating >= 3 %}
+                            {% if template_data.userRating >= 3 %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="threeStar.value=1">
                             {% else %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="threeStar.value=1">
                             {% endif %}
                             <!-- 4 star -->
-                            {% if template_data.rating >= 4 %}
+                            {% if template_data.userRating >= 4 %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="fourStar.value=1">
                             {% else %}
                             <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="fourStar.value=1">
                             {% endif %}
                             <!-- 5 star -->
-                            {% if template_data.rating == 5 %}
+                            {% if template_data.userRating == 5 %}
                                 <input class="d-inline review-star" type="image" src="{% static 'img/review_star_filled.png' %}" onclick="fiveStar.value=1">
                             {% else %}
                                 <input class="d-inline review-star" type="image" src="{% static 'img/review_star_outline.png' %}" onclick="fiveStar.value=1">
